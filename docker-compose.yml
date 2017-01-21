@@ -1,0 +1,16 @@
+version: '2'
+services:
+  shield:
+    image: shield
+    depends_on:
+      - postgres
+    command: ["./wait-for-it.sh", "postgres:5432", "--", "/shield-server-linux-amd64/start-shield.sh"]
+  #web:
+    #image: nginx
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
