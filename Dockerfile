@@ -28,4 +28,4 @@ COPY ./start-shield.sh .
 
 #CMD /shield-server-linux-amd64/daemon/shieldd -c shieldd.conf --log-level info
 
-# CMD ./start-shield.sh
+ CMD ./start-shield.sh

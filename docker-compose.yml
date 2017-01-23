@@ -3,14 +3,15 @@ services:
   shield:
     image: shield
     depends_on:
-      - postgres
+      - pg-ssl
     command: ["./wait-for-it.sh", "postgres:5432", "--", "/shield-server-linux-amd64/start-shield.sh"]
   #web:
     #image: nginx
-  postgres:
-    image: postgres
+  pg-ssl:
+    image: pg-ssl
     ports:
       - "5432:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: shield
