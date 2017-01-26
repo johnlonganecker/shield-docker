@@ -1,14 +1,15 @@
-FROM ubuntu:16.04
+FROM debian:jessie
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get install -y wget
 
-RUN wget https://github.com/starkandwayne/shield/releases/download/v0.8.1/shield-server-linux-amd64.tar.gz
+RUN wget https://github.com/starkandwayne/shield/releases/download/v0.8.3/shield-server-linux-amd64.tar.gz
 RUN tar xzf shield-server-linux-amd64.tar.gz
 
 WORKDIR /shield-server-linux-amd64
 
 RUN mkdir bin
+RUN mkdir /webui
 
 RUN cp agent/shield-agent bin/
 RUN cp cli/shield bin/
@@ -23,9 +24,8 @@ COPY ./shieldd.conf .
 COPY ./id_rsa .
 COPY ./wait-for-it.sh .
 COPY ./start-shield.sh .
+COPY ./webui /usr/share/shield/webui
 
-#RUN /shield-server-linux-amd64/daemon/shield-schema -t postgres -d postgres://postgres:postgres@postgres:5432/shield
+EXPOSE 8080
 
-#CMD /shield-server-linux-amd64/daemon/shieldd -c shieldd.conf --log-level info
-
- CMD ./start-shield.sh
+CMD ./start-shield.sh
