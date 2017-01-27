@@ -5,8 +5,8 @@ services:
     depends_on:
       - pg-ssl
     command: ["./wait-for-it.sh", "pg-ssl:5432", "-t", "30", "--", "/shield-server-linux-amd64/start-shield.sh"]
-    ports:
-    - "8080:8080"
+  shield-agent:
+    image: shield-agent
   web:
     image: nginx
     volumes:
@@ -18,14 +18,14 @@ services:
     - "80:80"
     depends_on:
       - shield
-    #command: ["./wait-for-it.sh", "shield:8080", "-t", "30", "--", "nginx", "-g", "daemon off;"]
-  #postgres:
-    #image: postgres
-    #ports:
-      #- "5432:5432"
-    #environment:
-      #POSTGRES_USER: postgres
-      #POSTGRES_PASSWORD: postgres
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: shield
   pg-ssl:
     image: pg-ssl
     environment:
