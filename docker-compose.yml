@@ -6,7 +6,9 @@ services:
       - pg-ssl
     command: ["./wait-for-it.sh", "pg-ssl:5432", "-t", "30", "--", "/shield-server-linux-amd64/start-shield.sh"]
   shield-agent:
-    image: shield-agent
+    build:
+      context: .
+      dockerfile: ./agent/Dockerfile
   web:
     image: nginx
     volumes:

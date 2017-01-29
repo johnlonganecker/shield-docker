@@ -1,9 +1,10 @@
+# Using base pg image for postgres backup/restore to work 
 FROM postgres:9.6
-ENV DEBIAN_FRONTEND noninteractive
+ENV SHIELD_VERSION v0.8.3
 
 RUN apt-get update && apt-get install -y wget
 
-RUN wget https://github.com/starkandwayne/shield/releases/download/v0.8.3/shield-server-linux-amd64.tar.gz
+RUN wget https://github.com/starkandwayne/shield/releases/download/${SHIELD_VERSION}/shield-server-linux-amd64.tar.gz
 RUN tar xzf shield-server-linux-amd64.tar.gz
 
 RUN mkdir -p /plugins/bin
@@ -13,12 +14,13 @@ RUN cp /shield-server-linux-amd64/plugins/* /plugins/bin/
 RUN cp /shield-server-linux-amd64/agent/shield-agent /bin/shield-agent
 RUN cp /shield-server-linux-amd64/daemon/shield-pipe /bin/shield-pipe
 
+# shield postgres plugin
+COPY ./postgres /plugins/bin/postgres
 COPY ./shield-agent.conf /
+
 COPY ./id_rsa /.ssh/id_rsa
 COPY ./id_rsa.pub /.ssh/authorized_keys
-COPY ./wait-for-it.sh /
-COPY ./start-shield-agent.sh /
 
 EXPOSE 4222
 
-CMD ./start-shield-agent.sh
+CMD ["./bin/shield-agent", "-c", "/shield-agent.conf", "--log-level", "debug"]
