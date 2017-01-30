@@ -7,17 +7,15 @@ RUN apt-get update && apt-get install -y wget
 RUN wget https://github.com/starkandwayne/shield/releases/download/${SHIELD_VERSION}/shield-server-linux-amd64.tar.gz
 RUN tar xzf shield-server-linux-amd64.tar.gz
 
-WORKDIR /shield-server-linux-amd64
+RUN cp /shield-server-linux-amd64/agent/shield-agent bin/
+RUN cp /shield-server-linux-amd64/cli/shield bin/
+RUN cp /shield-server-linux-amd64/daemon/shieldd bin/
+RUN cp /shield-server-linux-amd64/daemon/shield-schema bin/
+RUN cp /shield-server-linux-amd64/daemon/shield-pipe bin/
 
-RUN mkdir bin
+# WebUI
 RUN mkdir -p /usr/share/shield/webui
-
-RUN cp agent/shield-agent bin/
-RUN cp cli/shield bin/
-RUN cp daemon/shieldd bin/
-RUN cp daemon/shield-schema bin/
-RUN cp daemon/shield-pipe bin/
-RUN cp -R webui/* /usr/share/shield/webui
+RUN cp -R /shield-server-linux-amd64/webui/* /usr/share/shield/webui
 
 COPY ./daemon/shieldd.conf .
 COPY ./id_rsa .

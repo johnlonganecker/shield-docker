@@ -5,7 +5,6 @@ services:
     build:
       dockerfile: ./daemon/Dockerfile
       context: .
-    command: ["./wait-for-it.sh", "pg-ssl:5432", "-t", "30", "--", "/shield-server-linux-amd64/start-shield.sh"]
   shield-agent:
     build:
       context: .
