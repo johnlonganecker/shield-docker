@@ -1,6 +1,6 @@
 # Using base pg image for postgres backup/restore to work 
 FROM postgres:9.6
-ENV SHIELD_VERSION v0.8.3
+ENV SHIELD_VERSION v0.9.0
 
 RUN apt-get update && apt-get install -y wget
 
@@ -15,8 +15,7 @@ RUN cp /shield-server-linux-amd64/agent/shield-agent /bin/shield-agent
 RUN cp /shield-server-linux-amd64/daemon/shield-pipe /bin/shield-pipe
 
 # shield postgres plugin
-COPY ./postgres /plugins/bin/postgres
-COPY ./shield-agent.conf /
+COPY ./agent/shield-agent.conf /
 
 COPY ./id_rsa /.ssh/id_rsa
 COPY ./id_rsa.pub /.ssh/authorized_keys

@@ -1,9 +1,10 @@
-FROM debian:jessie
+FROM postgres:9.6
 ENV DEBIAN_FRONTEND noninteractive
+ENV SHIELD_VERSION v0.9.0
 
 RUN apt-get update && apt-get install -y wget
 
-RUN wget https://github.com/starkandwayne/shield/releases/download/v0.8.3/shield-server-linux-amd64.tar.gz
+RUN wget https://github.com/starkandwayne/shield/releases/download/${SHIELD_VERSION}/shield-server-linux-amd64.tar.gz
 RUN tar xzf shield-server-linux-amd64.tar.gz
 
 WORKDIR /shield-server-linux-amd64
@@ -18,13 +19,10 @@ RUN cp daemon/shield-schema bin/
 RUN cp daemon/shield-pipe bin/
 RUN cp -R webui/* /usr/share/shield/webui
 
-## TODO REMOVE ??
-# RUN cp -R webui             webui
-
-COPY ./shieldd.conf .
+COPY ./daemon/shieldd.conf .
 COPY ./id_rsa .
-COPY ./wait-for-it.sh .
-COPY ./start-shield.sh .
+COPY ./daemon/wait-for-it.sh .
+COPY ./daemon/start-shield.sh .
 
 EXPOSE 8080
 
