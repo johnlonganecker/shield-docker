@@ -9,6 +9,24 @@ cd shield-docker
 docker-compose build
 ```
 
+Shields Credentials:
+```
+username: user
+password: password
+```
+
+
+### Shield WebUI
+Check out the WebUI in your browser of choice
+```
+https://<docker-host>
+```
+
+If you are using the latest docker setup `<docker-host>` should be `localhost`
+
+The system is using a self-signed cert so your browser will most likely complain. Use the above username/password to login.
+
+### Shield CLI
 Install shield CLI
 ```
 brew tap starkandwayne/cf
