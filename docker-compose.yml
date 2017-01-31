@@ -5,10 +5,14 @@ services:
     build:
       dockerfile: ./daemon/Dockerfile
       context: .
+      args:
+        SHIELD_VERSION: v0.9.0
   shield-agent:
     build:
       context: .
       dockerfile: ./agent/Dockerfile
+      args:
+        SHIELD_VERSION: v0.9.0
   web:
     image: nginx
     volumes:

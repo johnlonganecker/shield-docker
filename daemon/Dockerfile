@@ -1,6 +1,7 @@
 FROM postgres:9.6
 ENV DEBIAN_FRONTEND noninteractive
-ENV SHIELD_VERSION v0.9.0
+ARG SHIELD_VERSION
+ENV SHIELD_VERSION ${SHIELD_VERSION:-v0.9.0}
 
 RUN apt-get update && apt-get install -y wget
 
