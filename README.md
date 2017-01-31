@@ -343,7 +343,51 @@ Notes:            optional summary
 
 ### Manually Start a Job
 ```
-shield run my-job
+shield run my-job -k
+```
+
+This will create an instance of a job called a task and execute it
+
+response:
+```
+Using https://localhost (lh) as SHIELD backend
+
+Scheduled immediate run of job
+To view task, type shield task <task-uuid>
+```
+
+Get detailed information about our task. The <task-uuid> will be unique so look at the response from the previous command to get your <task-uuid>
+```
+shield task <task-uuid>
+```
+
+This will print out a detailed list of everything running. This is useful to see what is going on under the hood.
+
+### Restore from Backup
+```
+shield restore -k
+```
+
+This will put you into an interactive prompt where you can pick a backup that you want to use with your restore
+
+```
+Using https://localhost (lh) as SHIELD backend
+
+Here are the 1 most recent backup archives for target my-target-name:
+
+      UUID                                  Taken at                         Expires at                       Status  Notes
+      ====                                  ========                         ==========                       ======  =====
+   1) 9c512425-63ee-446b-8077-a8875ccb3a19  Tue, 31 Jan 2017 20:48:10 +0000  Fri, 10 Feb 2017 20:48:10 +0000  valid
+
+
+  Which backup archive would you like to restore? [1-1]
+```
+
+
+
+## Additional Commands
+```
+shield commands
 ```
 
 ### TODO
@@ -353,8 +397,4 @@ shield run my-job
 - create docker shield image on docker hub
 - create docker agent image on docker hub
 - run CLI from a container
-- specify shield version
-- edit fields
 - `shield commands`
-
-`.shield_config` - contains shield configuration
