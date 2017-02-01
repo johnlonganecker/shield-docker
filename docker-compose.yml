@@ -24,17 +24,19 @@ services:
     - "80:80"
     depends_on:
       - shield
-  postgres:
-    image: postgres
-    ports:
-      - "5432:5432"
+  pg-ssl:
+    build:
+      context: ./postgres-ssl
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: shield
-  pg-ssl:
-    build:
-      context: ./postgres-ssl
+
+  # Extra Services to backup/restore
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
