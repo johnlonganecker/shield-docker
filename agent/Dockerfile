@@ -15,6 +15,23 @@ RUN cp /shield-server-linux-amd64/plugins/* /plugins/bin/
 RUN cp /shield-server-linux-amd64/agent/shield-agent /bin/shield-agent
 RUN cp /shield-server-linux-amd64/daemon/shield-pipe /bin/shield-pipe
 
+# MySQL
+RUN apt-get install libaio1
+RUN apt-get install libnuma1
+
+RUN wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-common_5.7.17-1debian8_amd64.deb
+RUN dpkg -i mysql-common_5.7.17-1debian8_amd64.deb
+
+RUN wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-community-client_5.7.17-1debian8_amd64.deb
+RUN dpkg -i mysql-community-client_5.7.17-1debian8_amd64.deb
+
+RUN mkdir -p /var/vcap/packages/shield-mysql/bin
+
+#RUN ln -s /usr/bin/mysqldump /var/vcap/packages/shield-mysql/bin/mysqldump
+#RUN ln -s /usr/bin/mysql /var/vcap/packages/shield-mysql/bin/mysql
+
+COPY ./mysql ./plugins/bin/mysql
+
 # shield postgres plugin
 COPY ./agent/shield-agent.conf /
 
