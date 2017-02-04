@@ -31,6 +31,9 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: shield
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+    - pg-data-volume:/var/lib/postgresql/data/pgdata
 
   # Extra Services to backup/restore
   postgres:
@@ -41,3 +44,15 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: shield
+  mysql:
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: shield
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
+
+volumes:
+  pg-data-volume:
