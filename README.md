@@ -9,12 +9,15 @@ cd shield-docker
 docker-compose build
 ```
 
-Shields Credentials:
+### Start up
 ```
-username: user
-password: password
+docker-compose up
 ```
 
+### To tear down
+```
+docker-compose down
+```
 
 ### Shield WebUI
 Check out the WebUI in your browser of choice
@@ -24,7 +27,13 @@ https://<docker-host>
 
 If you are using the latest docker setup `<docker-host>` should be `localhost`
 
-The system is using a self-signed cert so your browser will most likely complain. Use the above username/password to login.
+The system is using a self-signed cert so your browser will most likely complain.
+
+Shields Credentials:
+```
+username: user
+password: password
+```
 
 ### Shield CLI
 Install shield CLI
@@ -34,15 +43,16 @@ brew install starkandwayne/cf/shield
 ```
 Download CLI from https://github.com/starkandwayne/shield/releases
 
-### Start up
-```
-docker-compose up
-```
+### Sample Data
+The included `postgres` database has a table called `people` and is populated with a few rows.
 
-### Tear down
-```
-docker-compose down
-```
+| id  | name  |
+| --- | ----- |
+| 1   | Bob   |
+| 2   | Sarah |
+| 3   | Tim   |
+
+We will use this to make/restore backups
 
 ---
 ## Shield Terminology
@@ -416,3 +426,12 @@ shield commands
 - create docker agent image on docker hub
 - run CLI from a container
 - `shield commands`
+
+### Shield TODO
+- autocomplete
+  - plugins
+  - configs
+- plugins should someone contain exec they need to run backups
+- clone targets
+- show host in target
+- 

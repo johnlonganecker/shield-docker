@@ -44,15 +44,27 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: shield
-  mysql:
-    image: mysql
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: mysql
-      MYSQL_DATABASE: shield
-      MYSQL_USER: mysql
-      MYSQL_PASSWORD: mysql
+  #mysql:
+    #image: mysql
+    #ports:
+      #- "3306:3306"
+    #environment:
+      #MYSQL_ROOT_PASSWORD: mysql
+      #MYSQL_DATABASE: shield
+      #MYSQL_USER: mysql
+      #MYSQL_PASSWORD: mysql
+
+  # Insert sample data to restore
+  psql:
+    image: postgres
+    volumes:
+    - ./sample-data/postgres.sql:/postgres.sql
+    - ./sample-data/postgres-startup.sh:/postgres-startup.sh
+    command: [./postgres-startup.sh]
+
+networks:
+  shield:
+    driver: bridge
 
 volumes:
   pg-data-volume:
