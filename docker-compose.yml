@@ -44,15 +44,24 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: shield
-  #mysql:
-    #image: mysql
-    #ports:
-      #- "3306:3306"
-    #environment:
-      #MYSQL_ROOT_PASSWORD: mysql
-      #MYSQL_DATABASE: shield
-      #MYSQL_USER: mysql
-      #MYSQL_PASSWORD: mysql
+    depends_on:
+      - shield
+      - web
+      - pg-ssl
+      - psql
+  mysql:
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: shield
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
+    depends_on:
+      - shield
+      - web
+      - pg-ssl
 
   # Insert sample data to restore
   psql:
